@@ -2,6 +2,7 @@ provider "aws" {
   region = "us-east-1"
 }
 
+data "aws_caller_identity" "current" {}
 
 variable "ecr_image_uri" {
   description = "The URI of the Docker image in ECR"
