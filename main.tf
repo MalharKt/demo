@@ -43,13 +43,33 @@ resource "aws_db_instance" "example" {
   publicly_accessible  = true
 }
 
+# Create an IAM role for Lambda
+resource "aws_iam_role" "lambda_exec" {
+  name = "mal-lambda-exec-role"
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
+}
+
 
 # Lambda function configuration
 
 resource "aws_lambda_function" "example" {
   function_name = "s3-to-rds"
-  image_uri     = var.ecr_image_uri
-  role          = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/lambda-exec-role" # Existing role ARN
+  image_uri     = "253490791461.dkr.ecr.us-east-1.amazonaws.com/task:latest"
+  role          =  aws_iam_role.lambda_exec.arn
   timeout       = 20
   package_type  = "Image"
 
