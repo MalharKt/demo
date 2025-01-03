@@ -17,7 +17,7 @@ resource "aws_s3_bucket" "bucket_1" {
 resource "aws_s3_object" "uploaded_file" {
   bucket = aws_s3_bucket.bucket_1.id
   key    = "sample_data.csv" # The object key in the bucket
-  source = "./task/sample_data.csv" # Path to your local file
+  source = "/home/ubuntu/task/sample_data.csv" # Path to your local file
   acl    = "public-read"
 }
 
