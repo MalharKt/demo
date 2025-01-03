@@ -2,14 +2,6 @@ provider "aws" {
   region = "us-east-1"
 }
 
-data "aws_caller_identity" "current" {}
-
-variable "ecr_image_uri" {
-  description = "The URI of the Docker image in ECR"
-  type        = string
-}
-
-
 # Create an S3 bucket
 resource "aws_s3_bucket" "bucket_1" {
   bucket = "autom-bucket-25"
